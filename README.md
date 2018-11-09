@@ -15,6 +15,7 @@ Open with VS2015/2017 and compile
 ## Usage
 
 Update Settings.txt as needed:
+
 Report Year (Default: current year) = 2017
 Export Spreadsheet Name (Default: EPA.xlsx) = EPA.xlsx
 
