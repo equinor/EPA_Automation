@@ -17,7 +17,9 @@ Open with VS2015/2017 and compile
 Update Settings.txt as needed:
 
 Report Year (Default: current year) = 2017
+
 Export Spreadsheet Name (Default: EPA.xlsx) = EPA.xlsx
+
 
 Double click EPA_Automation.exe to run
 
