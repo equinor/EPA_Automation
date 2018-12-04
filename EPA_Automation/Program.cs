@@ -40,6 +40,7 @@ namespace EPA_Automation
             public string ParentCompanyLegalName { get; set; }
             public string QuantityGasReceived { get; set; }
             public string QuantityOfHydrocarbonLiquidsReceived { get; set; }
+            public string GasProducedCalendarYearFromWells { get; set; }
 
         }
 
@@ -318,6 +319,7 @@ namespace EPA_Automation
             string strParentCompanyLegalName = "";
             string strQuantityGasReceived = "";
             string strQuantityOfHydrocarbonLiquidsReceived = "";
+            string strGasProducedCalendarYearFromWells = "";
 
             XmlDocument xml = new XmlDocument();
             xml.LoadXml(strXML);
@@ -376,6 +378,12 @@ namespace EPA_Automation
                 strQuantityOfHydrocarbonLiquidsReceived = nodes[0].InnerText;
             }
 
+            nodes = xml.GetElementsByTagName("GasProducedCalendarYearFromWells");
+            if (nodes.Count > 0)
+            {
+                strGasProducedCalendarYearFromWells = nodes[0].InnerText;
+            }
+
 
             return new FacilityDetails
             {
@@ -385,7 +393,8 @@ namespace EPA_Automation
                 OilSales = strOilSales,
                 ParentCompanyLegalName = strParentCompanyLegalName,
                 QuantityGasReceived = strQuantityGasReceived,
-                QuantityOfHydrocarbonLiquidsReceived = strQuantityOfHydrocarbonLiquidsReceived
+                QuantityOfHydrocarbonLiquidsReceived = strQuantityOfHydrocarbonLiquidsReceived,
+                GasProducedCalendarYearFromWells = strGasProducedCalendarYearFromWells
             };
         }
 
@@ -850,7 +859,7 @@ namespace EPA_Automation
 
                     headerRow = new List<string[]>()
                     {
-                      new string[] { "Parent Company", "CO2 Tonnes", "CH4 Tonnes", "Gas Sales (mcf)", "Oil Sales (bbls)", "Parent Company", "CO2 Tonnes", "CH4 Tonnes", "Gas Received (mcf)", "Oil Received (bbls)" }
+                      new string[] { "Parent Company", "CO2 Tonnes", "CH4 Tonnes", "Gas Produced (mcf)", "Gas Sales (mcf)", "Oil Sales (bbls)", "Parent Company", "CO2 Tonnes", "CH4 Tonnes", "Gas Received (mcf)", "Oil Received (bbls)" }
                     };
                     headerRange = "A2:" + Char.ConvertFromUtf32(headerRow[0].Length + 64) + "2";
                     worksheet.Cells[headerRange].LoadFromArrays(headerRow);
@@ -861,7 +870,7 @@ namespace EPA_Automation
                         FacilityDetails fd = WIB_Report_Basin[i];
                         List<string[]> facilityRow = new List<string[]>()
                         {
-                          new string[] {fd.ParentCompanyLegalName,fd.CarbonDioxide,fd.Methane,fd.GasSales,fd.OilSales }
+                          new string[] {fd.ParentCompanyLegalName,fd.CarbonDioxide,fd.Methane,fd.GasProducedCalendarYearFromWells,fd.GasSales,fd.OilSales }
                         };
                         iExcelRow = 3 + i;
                         string rowRange = "A" + iExcelRow.ToString() + ":" + Char.ConvertFromUtf32(headerRow[0].Length + 64) + iExcelRow.ToString();
@@ -877,7 +886,7 @@ namespace EPA_Automation
                           new string[] {fd.ParentCompanyLegalName,fd.CarbonDioxide,fd.Methane,fd.QuantityGasReceived,fd.QuantityOfHydrocarbonLiquidsReceived }
                         };
                         iExcelRow = 3 + i;
-                        string rowRange = "F" + iExcelRow.ToString() + ":" + Char.ConvertFromUtf32(headerRow[0].Length + 64) + iExcelRow.ToString();
+                        string rowRange = "G" + iExcelRow.ToString() + ":" + Char.ConvertFromUtf32(headerRow[0].Length + 64) + iExcelRow.ToString();
                         worksheet.Cells[rowRange].LoadFromArrays(facilityRow);
                     }
 
@@ -905,7 +914,7 @@ namespace EPA_Automation
 
                     headerRow = new List<string[]>()
                     {
-                      new string[] { "Parent Company", "CO2 Tonnes", "CH4 Tonnes", "Gas Sales (mcf)", "Oil Sales (bbls)", "Parent Company", "CO2 Tonnes", "CH4 Tonnes", "Gas Received (mcf)", "Oil Received (bbls)" }
+                      new string[] { "Parent Company", "CO2 Tonnes", "CH4 Tonnes", "Gas Produced (mcf)", "Gas Sales (mcf)", "Oil Sales (bbls)", "Parent Company", "CO2 Tonnes", "CH4 Tonnes", "Gas Received (mcf)", "Oil Received (bbls)" }
                     };
                     headerRange = "A2:" + Char.ConvertFromUtf32(headerRow[0].Length + 64) + "2";
                     worksheet.Cells[headerRange].LoadFromArrays(headerRow);
@@ -916,7 +925,7 @@ namespace EPA_Automation
                         FacilityDetails fd = STX_Report_Basin[i];
                         List<string[]> facilityRow = new List<string[]>()
                         {
-                          new string[] {fd.ParentCompanyLegalName,fd.CarbonDioxide,fd.Methane,fd.GasSales,fd.OilSales }
+                          new string[] {fd.ParentCompanyLegalName,fd.CarbonDioxide,fd.Methane, fd.GasProducedCalendarYearFromWells, fd.GasSales,fd.OilSales }
                         };
                         iExcelRow = 3 + i;
                         string rowRange = "A" + iExcelRow.ToString() + ":" + Char.ConvertFromUtf32(headerRow[0].Length + 64) + iExcelRow.ToString();
@@ -932,7 +941,7 @@ namespace EPA_Automation
                           new string[] {fd.ParentCompanyLegalName,fd.CarbonDioxide,fd.Methane,fd.QuantityGasReceived,fd.QuantityOfHydrocarbonLiquidsReceived }
                         };
                         iExcelRow = 3 + i;
-                        string rowRange = "F" + iExcelRow.ToString() + ":" + Char.ConvertFromUtf32(headerRow[0].Length + 64) + iExcelRow.ToString();
+                        string rowRange = "G" + iExcelRow.ToString() + ":" + Char.ConvertFromUtf32(headerRow[0].Length + 64) + iExcelRow.ToString();
                         worksheet.Cells[rowRange].LoadFromArrays(facilityRow);
                     }
 
@@ -959,7 +968,7 @@ namespace EPA_Automation
 
                     headerRow = new List<string[]>()
                     {
-                      new string[] { "Parent Company", "CO2 Tonnes", "CH4 Tonnes", "Gas Sales (mcf)", "Oil Sales (bbls)", "Parent Company", "CO2 Tonnes", "CH4 Tonnes", "Gas Received (mcf)", "Oil Received (bbls)" }
+                      new string[] { "Parent Company", "CO2 Tonnes", "CH4 Tonnes", "Gas Produced (mcf)", "Gas Sales (mcf)", "Oil Sales (bbls)", "Parent Company", "CO2 Tonnes", "CH4 Tonnes", "Gas Received (mcf)", "Oil Received (bbls)" }
                     };
                     headerRange = "A2:" + Char.ConvertFromUtf32(headerRow[0].Length + 64) + "2";
                     worksheet.Cells[headerRange].LoadFromArrays(headerRow);
@@ -970,7 +979,7 @@ namespace EPA_Automation
                         FacilityDetails fd = APB_Report_Basin[i];
                         List<string[]> facilityRow = new List<string[]>()
                         {
-                          new string[] {fd.ParentCompanyLegalName,fd.CarbonDioxide,fd.Methane,fd.GasSales,fd.OilSales }
+                          new string[] {fd.ParentCompanyLegalName,fd.CarbonDioxide,fd.Methane, fd.GasProducedCalendarYearFromWells, fd.GasSales,fd.OilSales }
                         };
                         iExcelRow = 3 + i;
                         string rowRange = "A" + iExcelRow.ToString() + ":" + Char.ConvertFromUtf32(headerRow[0].Length + 64) + iExcelRow.ToString();
@@ -986,7 +995,7 @@ namespace EPA_Automation
                           new string[] {fd.ParentCompanyLegalName,fd.CarbonDioxide,fd.Methane,fd.QuantityGasReceived,fd.QuantityOfHydrocarbonLiquidsReceived }
                         };
                         iExcelRow = 3 + i;
-                        string rowRange = "F" + iExcelRow.ToString() + ":" + Char.ConvertFromUtf32(headerRow[0].Length + 64) + iExcelRow.ToString();
+                        string rowRange = "G" + iExcelRow.ToString() + ":" + Char.ConvertFromUtf32(headerRow[0].Length + 64) + iExcelRow.ToString();
                         worksheet.Cells[rowRange].LoadFromArrays(facilityRow);
                     }
 
@@ -1119,6 +1128,7 @@ namespace EPA_Automation
             
             try
             {
+                //Onshore Production Data
                 Console.WriteLine("Start Downloading Onshore Production Data from EPA Website...");
 
                 #region Getting data from STX (220)
@@ -1137,6 +1147,7 @@ namespace EPA_Automation
                 #endregion
 
 
+                //Onshore Gathering and Boosting Data
                 Console.WriteLine("Start Downloading Onshore Gathering and Boosting Data from EPA Website...");
 
                 #region Getting data from STX (220)
