@@ -783,7 +783,15 @@ namespace EPA_Automation
                 Row item = model.data.rows[i];
                 string strFacilityID = item.facility;
                 Tuple<string, string> tFacilityID = getGHGRPID2(strFacilityID);
-                Facility_dictionary.Add(tFacilityID.Item1, tFacilityID.Item2);
+                if (Facility_dictionary.ContainsKey(tFacilityID.Item1))
+                {
+                    continue;
+                }
+                else
+                {
+                    Facility_dictionary.Add(tFacilityID.Item1, tFacilityID.Item2);
+                }
+                
 
             }
 

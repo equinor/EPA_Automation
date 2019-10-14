@@ -1,2 +1,2 @@
-﻿Report Year (Default: current year) = 2017
+﻿Report Year (Default: current year) = 2018
 Export Spreadsheet Name (Default: EPA.xlsx) = EPA.xlsx
